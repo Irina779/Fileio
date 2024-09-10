@@ -2,6 +2,7 @@ from tkinter import *
 import requests # requests- это запросы, которые будем делать  к сайту file.io
 from tkinter import filedialog as fd
 from tkinter import messagebox as mb
+import pyperclip # добавляем библиотеку
 from tkinter import ttk# используем виджеты ttk
 
 def upload():# создаем функцию upload
@@ -22,6 +23,9 @@ def upload():# создаем функцию upload
                     # и тогда ссылка сама прилетит в переменную link и мы сможем ее вывести в поле ввода
                 entry.delete(0,END)
                 entry.insert(0, link)# с начальной поцизии 0 вставляем ссылку
+                pyperclip.copy(link)  # Копирование ссылки в буфер обмена
+                mb.showinfo("Ссылка скопирована", f"Ссылка {link}успешно скопирована в буфер обмена")
+
     except Exception as e:
         mb.showerror("Ошибка", f"Произошла ошибка: {e}")
 
