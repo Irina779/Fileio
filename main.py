@@ -69,7 +69,7 @@ def show_history(): # создаем функцию
 
     # links_listbox -список ссылок
     links_listbox = Listbox(history_window, width=50, height=20)# второй listbox
-    links_listbox.grid(row=0, column=1, padx=(0,10) вплотную и рамочка 10, pady=10)# строка 0, колонка 1
+    links_listbox.grid(row=0, column=1, padx=(0,10))# вплотную и рамочка 10, pady=10)# строка 0, колонка 1
 
     with open(history_file, "r") as f:# открыавем фаил и раскладываем по спискам для чтения
         history = json.load(f)# положим то что загрузим из джейсон
