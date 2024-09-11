@@ -53,6 +53,33 @@ def upload():# создаем функцию upload
         mb.showerror("Ошибка", f"Произошла ошибка: {e}")
 
 
+def show_history(): # создаем функцию
+    if not os.path.exists(history_file):# делаем проверку есть ли фаил
+        messagebox.showinfo("История", "История загрузок пуста") # если файла не существуем
+        return
+
+    history_window = Toplevel(window)# создаем еще одно окно
+    history_window.title("История Загрузок") # заголовок
+
+    # files_listbox -список файлов
+    files_listbox = Listbox(history_window, width=50, height=20)# создаем первый лист бокс, находится в
+    # history_window, ширина 50, высота 20
+    files_listbox.grid(row=0, column=0, padx=(10,0), pady=10)# размещаем по сетке при помощи grid
+    # строка 0, колонка 0, ( padx=(10,0) отступ слева 10, право 0), отступ по y=10 (отступы сверху и снизу)
+
+    # links_listbox -список ссылок
+    links_listbox = Listbox(history_window, width=50, height=20)# второй listbox
+    links_listbox.grid(row=0, column=1, padx=(0,10) вплотную и рамочка 10, pady=10)# строка 0, колонка 1
+
+    with open(history_file, "r") as f:# открыавем фаил и раскладываем по спискам для чтения
+        history = json.load(f)# положим то что загрузим из джейсон
+        for item in history:# создаем цикл history-это список словарей, надо все перебрать
+            files_listbox.insert(END, item['file_path'])# вставляем в конец списка
+            # выбираем по ключу, ключ file_path берем из upload_history.json
+            links_listbox.insert(END, item['download_link'])
+
+
+
 window = Tk()# создаем окно
 window.title("Сохранение файлов в облаке")# заголовок
 window.geometry('400x200') # размер окна
@@ -63,6 +90,10 @@ upload_button.pack()# создаем и размещаем кнопку, command
 entry = ttk.Entry()# поле в которое будет выведена ссылка на наш загруженный фаил,
 # чтобы ее потом можно было выделить и скопировать
 entry.pack()
+
+history_button = ttk.Button(text="Показать Историю", command=show_history)
+history_button.pack()
+
 
 window.mainloop()
 
